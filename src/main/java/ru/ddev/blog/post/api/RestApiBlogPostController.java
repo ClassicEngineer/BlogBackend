@@ -27,6 +27,13 @@ public class RestApiBlogPostController {
         return Optional.ofNullable(limit).map(DummyFactory::generatePosts).orElse(DummyFactory.one());
     }
 
+    @GetMapping(value = "/posts/{id}")
+    public BlogPostView getPostById(@PathVariable String id) {
+        log.info("Get post by id called: " + id);
+        return DummyFactory.dummy(id);
+    }
+
+
     @PostMapping(value = "/posts", consumes = MediaType.APPLICATION_JSON_VALUE)
     public BlogPostView createPost(@RequestBody BlogPostCreateView body) {
         log.info("Post body accepted: " + body);
