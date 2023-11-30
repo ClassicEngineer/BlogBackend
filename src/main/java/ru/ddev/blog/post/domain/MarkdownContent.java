@@ -12,7 +12,7 @@ public class MarkdownContent {
 
     public static MarkdownContent extract(String raw) throws MarkdownParseException {
         try {
-            return raw.contains("---") ? new MarkdownContent(raw.split("---")[2]) : new MarkdownContent(raw);
+            return raw.contains("---") ? new MarkdownContent(raw.split("---")[2].trim()) : new MarkdownContent(raw.trim());
         } catch (Exception e) {
             throw new MarkdownParseException(e);
         }

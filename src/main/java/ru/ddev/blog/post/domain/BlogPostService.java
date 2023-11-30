@@ -30,7 +30,7 @@ public class BlogPostService {
     public PostDto updatePostById(String id, PostDto dto) {
         BlogPost post = blogPostRepository.findById(id).orElse(new BlogPost(dto.getContent()));
 
-        post.update(dto.getTitle(), dto.getContent());
+        post.update(dto.getContent());
 
         blogPostRepository.save(post);
 

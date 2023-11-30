@@ -29,11 +29,11 @@ public class BlogPost {
     }
 
     @SneakyThrows
-    public void update(String title, String raw) {
+    public void update(String raw) {
         MarkdownHeader header = MarkdownHeader.extract(raw);
         MarkdownContent md = MarkdownContent.extract(raw);
 
-        this.title = title;
-        this.content = new PostContent(raw, header.getRaw(), content.getRaw());
+        this.title = header.getTitle();
+        this.content = new PostContent(raw, header.getRaw(), md.getRaw());
     }
 }

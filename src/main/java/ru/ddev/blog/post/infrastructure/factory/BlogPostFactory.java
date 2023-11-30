@@ -21,7 +21,6 @@ public class BlogPostFactory {
 
     public static PostDto viewToDto(BlogPostUpdateView view) {
         return PostDto.builder()
-                .title(view.getTitle())
                 .content(view.getContent())
                 .build();
     }
