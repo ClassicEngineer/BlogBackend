@@ -1,9 +1,6 @@
 package ru.ddev.blog.post.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -21,14 +18,22 @@ public class BlogPost {
 
     private LocalDate createdAt;
 
-    public BlogPost(String title, String content) {
-        this.title = title;
-        this.content = new PostContent(content);
+    @SneakyThrows
+    public BlogPost(String raw)  {
+        MarkdownHeader header = MarkdownHeader.extract(raw);
+        MarkdownContent content = MarkdownContent.extract(raw);
+
+        this.title = header.getTitle();
+        this.content = new PostContent(raw, header.getRaw(), content.getRaw());
         this.createdAt = LocalDate.now();
     }
 
-    public void update(String title, String content) {
+    @SneakyThrows
+    public void update(String title, String raw) {
+        MarkdownHeader header = MarkdownHeader.extract(raw);
+        MarkdownContent md = MarkdownContent.extract(raw);
+
         this.title = title;
-        this.content = new PostContent(content);
+        this.content = new PostContent(raw, header.getRaw(), content.getRaw());
     }
 }

@@ -14,7 +14,11 @@ public class BlogPostView {
 
     private String title;
 
+    private String imageSrc;
+
     private String content;
+
+    private String header;
 
     private List<TagView> tags;
 

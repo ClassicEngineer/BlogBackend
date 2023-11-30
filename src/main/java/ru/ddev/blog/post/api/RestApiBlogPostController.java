@@ -3,6 +3,7 @@ package ru.ddev.blog.post.api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ddev.blog.post.api.view.BlogPostCreateView;
 import ru.ddev.blog.post.api.view.BlogPostUpdateView;
@@ -24,13 +25,14 @@ public class RestApiBlogPostController {
     @GetMapping("/posts")
     public Collection<BlogPostView> getPosts(@RequestParam(required = false) Long limit,
                                              @RequestParam(required = false) Long page) {
-        return Optional.ofNullable(limit).map(DummyFactory::generatePosts).orElse(DummyFactory.one());
+        return applicationService.getPosts(limit, page);
     }
 
     @GetMapping(value = "/posts/{id}")
-    public BlogPostView getPostById(@PathVariable String id) {
+    public ResponseEntity<BlogPostView> getPostById(@PathVariable String id) {
         log.info("Get post by id called: " + id);
-        return DummyFactory.dummy(id);
+        return applicationService.getPostById(id).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 

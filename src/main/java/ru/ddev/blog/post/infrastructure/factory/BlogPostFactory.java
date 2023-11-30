@@ -8,12 +8,13 @@ import ru.ddev.blog.post.domain.BlogPost;
 import ru.ddev.blog.post.domain.PostContent;
 import ru.ddev.blog.post.infrastructure.entity.BlogPostEntity;
 
+import java.text.MessageFormat;
+
 
 public class BlogPostFactory {
 
     public static PostDto viewToDto(BlogPostCreateView view) {
         return PostDto.builder()
-                .title(view.getTitle())
                 .content(view.getContent())
                 .build();
     }
@@ -29,7 +30,9 @@ public class BlogPostFactory {
         return BlogPostView.builder()
                 .id(dto.getId())
                 .title(dto.getTitle())
+                .header(dto.getHeader())
                 .content(dto.getContent())
+                .creationDate(dto.getCreatedAt())
                 .build();
     }
 
@@ -37,7 +40,9 @@ public class BlogPostFactory {
         return PostDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
-                .content(post.getContent().getRaw())
+                .content(post.getContent().getContent())
+                .header(post.getContent().getHeader())
+                .createdAt(post.getCreatedAt())
                 .build();
     }
 
@@ -45,16 +50,18 @@ public class BlogPostFactory {
         return BlogPostEntity.builder()
                 .id(post.getId())
                 .title(post.getTitle())
-                .content(post.getContent().getRaw())
+                .header(post.getContent().getHeader())
+                .content(post.getContent().getContent())
                 .createdAt(post.getCreatedAt())
                 .build();
     }
 
     public static BlogPost entityToDomain(BlogPostEntity entity) {
+        String post = MessageFormat.format("{0}\n{1}", entity.getHeader(), entity.getContent());
         return BlogPost.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
-                .content(new PostContent(entity.getContent()))
+                .content(new PostContent(post, entity.getHeader(), entity.getContent()))
                 .createdAt(entity.getCreatedAt())
                 .build();
     }

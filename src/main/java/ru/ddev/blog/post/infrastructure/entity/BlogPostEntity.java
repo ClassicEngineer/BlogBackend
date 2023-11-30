@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-@Document(collation = "posts")
+@Document(collection = "posts")
 public class BlogPostEntity {
 
     @MongoId
@@ -21,9 +21,13 @@ public class BlogPostEntity {
 
     private String title;
 
+    private String header;
+
     private LocalDate createdAt;
 
     private LocalDate lastUpdatedAt;
+
+    private String raw;
 
     /*
         TODO: comments, author, date of creation

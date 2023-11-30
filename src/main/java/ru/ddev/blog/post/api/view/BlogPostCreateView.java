@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BlogPostCreateView {
 
-    private String title;
-    private String content = "";
+    private String content = ""; // Markdown content with special header
 }
