@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.ddev.blog.post.application.dto.PostDto;
 import ru.ddev.blog.post.domain.BlogPost;
 import ru.ddev.blog.post.infrastructure.entity.BlogPostEntity;
 import ru.ddev.blog.post.infrastructure.factory.BlogPostFactory;
@@ -32,5 +31,11 @@ public class BlogPostRepository {
 
     public Collection<BlogPost> findByPageRequest(PageRequest request) {
         return blogPostDomainRepository.findAll(request).stream().map(BlogPostFactory::entityToDomain).toList();
+    }
+
+    public Collection<BlogPost> findBy(String searchBy) {
+        return blogPostDomainRepository.findAllByContentContainsIgnoreCaseOrTitleContainsIgnoreCase(searchBy, searchBy).stream()
+                .map(BlogPostFactory::entityToDomain)
+                .toList();
     }
 }

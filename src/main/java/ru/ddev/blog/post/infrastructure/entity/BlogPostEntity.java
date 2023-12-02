@@ -23,6 +23,8 @@ public class BlogPostEntity {
 
     private String header;
 
+    private String imageSource;
+
     private LocalDate createdAt;
 
     private LocalDate lastUpdatedAt;

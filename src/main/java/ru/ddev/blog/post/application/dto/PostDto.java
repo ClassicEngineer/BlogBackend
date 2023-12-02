@@ -15,4 +15,5 @@ public class PostDto {
     private String content = "";
     private String header = "";
     private LocalDate createdAt;
+    private String imageSource;
 }

@@ -32,6 +32,7 @@ public class BlogPostFactory {
                 .header(dto.getHeader())
                 .content(dto.getContent())
                 .creationDate(dto.getCreatedAt())
+                .imgSrc(dto.getImageSource())
                 .build();
     }
 
@@ -42,6 +43,7 @@ public class BlogPostFactory {
                 .content(post.getContent().getContent())
                 .header(post.getContent().getHeader())
                 .createdAt(post.getCreatedAt())
+                .imageSource(post.getImageSource())
                 .build();
     }
 
@@ -51,6 +53,7 @@ public class BlogPostFactory {
                 .title(post.getTitle())
                 .header(post.getContent().getHeader())
                 .content(post.getContent().getContent())
+                .imageSource(post.getImageSource())
                 .createdAt(post.getCreatedAt())
                 .build();
     }
@@ -62,6 +65,7 @@ public class BlogPostFactory {
                 .title(entity.getTitle())
                 .content(new PostContent(post, entity.getHeader(), entity.getContent()))
                 .createdAt(entity.getCreatedAt())
+                .imageSource(entity.getImageSource())
                 .build();
     }
 }

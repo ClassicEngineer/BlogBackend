@@ -14,6 +14,8 @@ public class BlogPost {
 
     private String title;
 
+    private String imageSource;
+
     private PostContent content;
 
     private LocalDate createdAt;
@@ -24,8 +26,10 @@ public class BlogPost {
         MarkdownContent content = MarkdownContent.extract(raw);
 
         this.title = header.getTitle();
-        this.content = new PostContent(raw, header.getRaw(), content.getRaw());
+        this.imageSource = header.getImage();
         this.createdAt = LocalDate.now();
+        this.content = new PostContent(raw, header.getRaw(), content.getRaw());
+
     }
 
     @SneakyThrows
@@ -34,6 +38,7 @@ public class BlogPost {
         MarkdownContent md = MarkdownContent.extract(raw);
 
         this.title = header.getTitle();
+        this.imageSource = header.getImage();
         this.content = new PostContent(raw, header.getRaw(), md.getRaw());
     }
 }

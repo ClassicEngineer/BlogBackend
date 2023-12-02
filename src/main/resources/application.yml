@@ -4,3 +4,5 @@ spring:
       password: rootpassword
       username: root
       authentication-database: admin
+  mvc:
+    static-path-pattern=/content/**:

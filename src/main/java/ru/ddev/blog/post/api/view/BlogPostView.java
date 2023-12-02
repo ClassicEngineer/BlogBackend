@@ -14,7 +14,7 @@ public class BlogPostView {
 
     private String title;
 
-    private String imageSrc;
+    private String imgSrc;
 
     private String content;
 
