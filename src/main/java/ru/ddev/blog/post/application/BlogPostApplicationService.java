@@ -3,13 +3,13 @@ package ru.ddev.blog.post.application;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.ddev.blog.post.api.view.BlogPostCreateView;
+import ru.ddev.blog.post.api.view.BlogPostPaginationView;
 import ru.ddev.blog.post.api.view.BlogPostUpdateView;
 import ru.ddev.blog.post.api.view.BlogPostView;
 import ru.ddev.blog.post.application.dto.GetPostsDto;
 import ru.ddev.blog.post.domain.BlogPostService;
 import ru.ddev.blog.post.infrastructure.factory.BlogPostFactory;
 
-import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -29,10 +29,10 @@ public class BlogPostApplicationService {
         return BlogPostFactory.dtoToView(dto);
     }
 
-    public Collection<BlogPostView> getPosts(Long limit, Long page) {
-        return blogPostService.getPosts(new GetPostsDto(limit, page)).stream()
-                .map(BlogPostFactory::dtoToView)
-                .toList();
+    public BlogPostPaginationView getPaginationView(Long limit, Long page) {
+        var dto = blogPostService.getPosts(new GetPostsDto(limit, page));
+        var views = dto.getPosts().stream().map(BlogPostFactory::dtoToView).toList();
+        return new BlogPostPaginationView(views, dto.getTotalPages());
     }
 
     public Optional<BlogPostView> getPostById(String id) {

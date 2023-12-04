@@ -1,6 +1,7 @@
 package ru.ddev.blog.post.infrastructure.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,7 @@ import ru.ddev.blog.post.infrastructure.factory.BlogPostFactory;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -29,8 +31,10 @@ public class BlogPostRepository {
         return blogPostDomainRepository.findById(id).map(BlogPostFactory::entityToDomain);
     }
 
-    public Collection<BlogPost> findByPageRequest(PageRequest request) {
-        return blogPostDomainRepository.findAll(request).stream().map(BlogPostFactory::entityToDomain).toList();
+    public Integer fillByPageRequest(PageRequest request, List<BlogPost> posts) {
+        Page<BlogPostEntity> page =  blogPostDomainRepository.findAll(request);
+        posts.addAll(page.stream().map(BlogPostFactory::entityToDomain).toList());
+        return page.getTotalPages();
     }
 
     public Collection<BlogPost> findBy(String searchBy) {

@@ -2,17 +2,17 @@ package ru.ddev.blog.post.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ddev.blog.post.api.view.BlogPostCreateView;
+import ru.ddev.blog.post.api.view.BlogPostPaginationView;
 import ru.ddev.blog.post.api.view.BlogPostUpdateView;
 import ru.ddev.blog.post.api.view.BlogPostView;
 import ru.ddev.blog.post.application.BlogPostApplicationService;
-import ru.ddev.blog.post.infrastructure.factory.DummyFactory;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @Log
 @RestController
@@ -23,9 +23,11 @@ public class RestApiBlogPostController {
     private final BlogPostApplicationService applicationService;
 
     @GetMapping("/posts")
-    public Collection<BlogPostView> getPosts(@RequestParam(required = false) Long limit,
+    public ResponseEntity<BlogPostPaginationView> getPosts(@RequestParam(required = false) Long limit,
                                              @RequestParam(required = false) Long page) {
-        return applicationService.getPosts(limit, page);
+        BlogPostPaginationView paginationView = applicationService.getPaginationView(limit, page);
+        return ResponseEntity.ok()
+                .body(paginationView);
     }
 
     @GetMapping(value = "/posts/{id}")

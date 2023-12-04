@@ -41,7 +41,7 @@ public class MarkdownHeader {
             List<String> keysAndValues = Arrays.stream(headerValues).filter(Predicate.not(String::isEmpty)).toList();
             String title = getValue(keysAndValues.get(0));
             String date = getValue(keysAndValues.get(1));
-            String image = "http://localhost:8080/image/" + getValue(keysAndValues.get(2));
+            String image = getValue(keysAndValues.get(2));
             Boolean draft = Boolean.getBoolean(getValue(keysAndValues.get(3)));
             List<String> tags = getTags(headerContent);
             return MarkdownHeader.builder()

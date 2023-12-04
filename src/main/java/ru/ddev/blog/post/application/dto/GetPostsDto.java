@@ -14,7 +14,7 @@ public class GetPostsDto {
 
 
     public int getLimit() {
-        return Optional.ofNullable(limit).map(Long::intValue).orElse(10);
+        return Optional.ofNullable(limit).map(Long::intValue).orElse(9);
     }
 
     public int getPage() {
